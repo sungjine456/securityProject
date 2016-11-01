@@ -5,8 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
+	
 	@RequestMapping("/")
 	public String test(){
 		return "hello";
+	}
+	
+	@RequestMapping("/admin")
+	public String adminView(){
+		return "admin";
 	}
 }
