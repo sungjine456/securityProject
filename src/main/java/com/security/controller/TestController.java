@@ -1,18 +1,24 @@
 package com.security.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+@Controller
 public class TestController {
 	
 	@RequestMapping("/")
-	public String test(){
+	public @ResponseBody String test(){
 		return "hello";
 	}
 	
 	@RequestMapping("/admin")
-	public String adminView(){
+	public @ResponseBody String adminView(){
 		return "admin";
+	}
+	
+	@RequestMapping("/login")
+	public String login(){
+		return "login";
 	}
 }

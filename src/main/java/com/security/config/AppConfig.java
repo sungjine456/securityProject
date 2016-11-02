@@ -1,27 +1,33 @@
 package com.security.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import freemarker.template.utility.XmlEscape;
 
 @Configuration
-public class AppConfig extends WebSecurityConfigurerAdapter {
+@EnableWebMvc
+public class AppConfig extends WebMvcConfigurerAdapter {
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/admin/**").hasRole("ADMIN")
-			.antMatchers("/**").permitAll()
-			.and()
-			.formLogin();
+	@Bean(name="freemarkerConfig")
+	public FreeMarkerConfigurer freemarkerConfig() {
+		FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
+		configurer.setTemplateLoaderPath("/");
+		Map<String, Object> map = new HashMap<>();
+		map.put("xml_escape", new XmlEscape());
+		configurer.setFreemarkerVariables(map);
+		return configurer;
 	}
 	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("admin")
-			.password("1234")
-			.authorities("ROLE_ADMIN");
+	public void configureViewResolvers(ViewResolverRegistry registry) {
+		registry.freeMarker();
 	}
 }
