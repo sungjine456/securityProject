@@ -13,7 +13,7 @@ public class TestController {
 	}
 	
 	@RequestMapping("/admin")
-	public @ResponseBody String adminView(){
+	public String adminView(){
 		return "admin";
 	}
 	
