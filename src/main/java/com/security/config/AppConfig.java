@@ -3,6 +3,7 @@ package com.security.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,5 +30,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		registry.freeMarker();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean(ClassPathTldsLoader.class)
+	public ClassPathTldsLoader classPathTldsLoader(){
+	    return new ClassPathTldsLoader();
 	}
 }
