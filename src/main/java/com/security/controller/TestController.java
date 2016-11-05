@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.security.security.UserDetailsImpl;
 public class TestController {
 	
 	@Autowired private MemberRepository memberRepository;
+	@Autowired private PasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/")
 	public String test(){
@@ -41,6 +43,7 @@ public class TestController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(Member member){
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		memberRepository.save(member);
 		
 		UserDetailsImpl userDetails = new UserDetailsImpl(member);
