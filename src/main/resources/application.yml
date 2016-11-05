@@ -4,3 +4,7 @@ spring:
     username: security
     password: security
     driver-class-name: com.mysql.jdbc.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

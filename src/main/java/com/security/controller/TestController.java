@@ -41,6 +41,11 @@ public class TestController {
 		return "join";
 	}
 	
+	@RequestMapping("/403Error")
+	public String errorPage(){
+		return "/403ErrorPage";
+	}
+	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(Member member){
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
